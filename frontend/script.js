@@ -1,5 +1,8 @@
 // API Configuration
-const API_URL = 'http://localhost:8000';
+// Vercel'de production'da /api kullan, local'de localhost:8000
+const API_URL = window.location.hostname === 'localhost'
+    ? 'http://localhost:8000'
+    : '/api';
 
 // Utility Functions
 function showLoading(buttonId) {
