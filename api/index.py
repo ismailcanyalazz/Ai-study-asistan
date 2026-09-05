@@ -10,9 +10,13 @@ import os
 from google import genai
 from pypdf import PdfReader
 from io import BytesIO
+from mangum import Mangum
 
 # Gemini API yapılandırması
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+api_key = os.getenv("GEMINI_API_KEY")
+if not api_key:
+    raise RuntimeError("GEMINI_API_KEY environment variable is not set!")
+client = genai.Client(api_key=api_key)
 
 app = FastAPI(title="AI Study Assistant API")
 
@@ -249,3 +253,6 @@ async def pdf_yukle(file: UploadFile = File(...)):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"PDF işleme hatası: {str(e)}")
+
+# Vercel Serverless Handler
+handler = Mangum(app)
