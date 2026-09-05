@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Yapay zeka destekli ders çalışma asistanı - Konu özetleme, soru üretme ve çalışma planı oluşturma">
+    <title>🧠 AI Study Assistant - Yapay Zeka Destekli Ders Çalışma Asistanı</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">🧠</div>
+            <h1>AI Study Assistant</h1>
+            <p class="subtitle">Yapay Zeka Destekli Ders Çalışma Asistanı</p>
+        </header>
+
+        <!-- Main Grid -->
+        <div class="grid">
+            <!-- 1. Konu Özetleme -->
+            <div class="card" style="animation-delay: 0.1s;">
+                <div class="card-header">
+                    <span class="card-icon">📝</span>
+                    <h2 class="card-title">Konu Özetleme</h2>
+                </div>
+                <div class="input-group">
+                    <label for="konu-input">Konuyu Girin</label>
+                    <textarea id="konu-input" placeholder="Örn: Osmanlı İmparatorluğu'nun kuruluş dönemi"></textarea>
+                </div>
+                <button id="ozet-btn" class="btn btn-primary" onclick="konuOzetle()">
+                    📝 Özet Oluştur
+                </button>
+                <div id="ozet-result" class="result-box hidden"></div>
+            </div>
+
+            <!-- 2. Soru Üretme -->
+            <div class="card" style="animation-delay: 0.2s;">
+                <div class="card-header">
+                    <span class="card-icon">❓</span>
+                    <h2 class="card-title">Soru Üretme</h2>
+                </div>
+                <div class="input-group">
+                    <label for="soru-konu-input">Konu</label>
+                    <textarea id="soru-konu-input"
+                        placeholder="Örn: Fotosentez ve bitkilerde enerji üretimi"></textarea>
+                </div>
+                <button id="soru-btn" class="btn btn-secondary" onclick="soruUret()">
+                    ❓ Soru Üret
+                </button>
+                <div id="soru-result" class="result-box hidden"></div>
+            </div>
+
+            <!-- 3. Çalışma Planı -->
+            <div class="card" style="animation-delay: 0.3s;">
+                <div class="card-header">
+                    <span class="card-icon">📅</span>
+                    <h2 class="card-title">Çalışma Planı</h2>
+                </div>
+                <div class="input-group">
+                    <label for="plan-konu-input">Konu</label>
+                    <input type="text" id="plan-konu-input" placeholder="Örn: Matematik - İntegral">
+                </div>
+                <div class="input-group">
+                    <label for="seviye-select">Seviye</label>
+                    <select id="seviye-select">
+                        <option value="Lise">Lise</option>
+                        <option value="Üniversite">Üniversite</option>
+                        <option value="Yüksek Lisans">Yüksek Lisans</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="sure-input">Günlük Süre</label>
+                    <input type="text" id="sure-input" placeholder="Örn: 2 saat">
+                </div>
+                <div class="input-group">
+                    <label for="gun-input">Sınava Kalan Gün</label>
+                    <input type="text" id="gun-input" placeholder="Örn: 15 gün">
+                </div>
+                <button id="plan-btn" class="btn btn-accent" onclick="calismaPlanOlustur()">
+                    📅 Plan Oluştur
+                </button>
+                <div id="plan-result" class="result-box hidden"></div>
+            </div>
+
+            <!-- 4. Metin Açıklama -->
+            <div class="card" style="animation-delay: 0.4s;">
+                <div class="card-header">
+                    <span class="card-icon">💡</span>
+                    <h2 class="card-title">Metin Açıklama</h2>
+                </div>
+                <div class="input-group">
+                    <label for="metin-input">Karmaşık Metni Yapıştırın</label>
+                    <textarea id="metin-input" placeholder="Anlamadığınız akademik metni buraya yapıştırın..."
+                        style="min-height: 150px;"></textarea>
+                </div>
+                <button id="metin-btn" class="btn btn-primary" onclick="metinAcikla()">
+                    💡 Açıkla
+                </button>
+                <div id="metin-result" class="result-box hidden"></div>
+            </div>
+
+            <!-- 5. PDF Yükleme -->
+            <div class="card" style="animation-delay: 0.5s;">
+                <div class="card-header">
+                    <span class="card-icon">📄</span>
+                    <h2 class="card-title">PDF Açıklama</h2>
+                </div>
+                <div class="input-group">
+                    <label>PDF Dosyası Seçin</label>
+                    <div class="file-upload">
+                        <input type="file" id="pdf-input" accept=".pdf">
+                        <div class="file-upload-label">
+                            <span>📄 PDF dosyası seçin</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="pdf-btn" class="btn btn-secondary" onclick="pdfYukle()">
+                    📄 PDF Yükle ve Açıkla
+                </button>
+                <div id="pdf-result" class="result-box hidden"></div>
+            </div>
+
+            <!-- 6. Hızlı İpuçları -->
+            <div class="card tips-card" style="animation-delay: 0.6s;">
+                <div class="card-header">
+                    <span class="card-icon">💡</span>
+                    <h2 class="card-title">Kullanım İpuçları</h2>
+                </div>
+                <ul>
+                    <li>✨ Konuları detaylı yazın, daha iyi sonuç alın</li>
+                    <li>📚 Çalışma planı için gerçekçi süreler belirleyin</li>
+                    <li>🎯 Sorular sınav formatında üretilir</li>
+                    <li>📄 PDF'ler otomatik olarak özetlenir</li>
+                    <li>🔄 Anlamadığınız yerleri tekrar sorun</li>
+                    <li>⚡ Devils Den ile hızlı ve ücretsiz!</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 2rem 0; color: var(--text-muted);">
+            <p>🧠 AI Study Assistant - Yapay Zeka ile Daha Akıllı Çalış</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+                Powered by Devils Den ⚡
+            </p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+
+</html>
