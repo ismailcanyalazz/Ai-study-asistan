@@ -7,10 +7,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 import os
+from dotenv import load_dotenv
 from google import genai
 from pypdf import PdfReader
 from io import BytesIO
 from mangum import Mangum
+
+# .env dosyasını yükle (local geliştirme için)
+load_dotenv()
 
 # Gemini API yapılandırması
 api_key = os.getenv("GEMINI_API_KEY")
